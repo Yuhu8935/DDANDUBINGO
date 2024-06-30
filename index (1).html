@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>만두의 3X3 궁빙고</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap");
+
+    * {
+      font-family: "Hahmlet", serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url('https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/bucketList/bg-grid.png');
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 360px;
+      text-align: center;
+      padding-top: 50px;
+      /* 위쪽 여백 추가 */
+    }
+
+    .title {
+      background-color: blue;
+      border-radius: 10px;
+      color: white;
+      text-align: center;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      /* 제목과 다음 문장 사이에 여백 추가 */
+    }
+
+    .description {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      /* 문장들 사이에 여백 추가 */
+    }
+
+    .sub-description {
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 20px;
+      /* 문장들 사이에 더 큰 여백 추가 */
+    }
+
+    .bucket {
+      position: relative;
+      /* 상대적 위치 설정 */
+      width: 100px;
+      height: 100px;
+      background-position: center;
+      background-size: cover;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 13px;
+      cursor: pointer;
+      /* 포인터 모양으로 변경 */
+    }
+
+    .bucket::after {
+      content: "";
+      /* 도장 이미지 추가 */
+      position: absolute;
+      /* 절대 위치 설정 */
+      top: 50%;
+      /* 상단 여백 */
+      left: 50%;
+      /* 왼쪽 여백 */
+      transform: translate(-50%, -50%);
+      /* 가운데 정렬 */
+      width: 100px;
+      /* 도장 이미지 너비 */
+      height: 100px;
+      /* 도장 이미지 높이 */
+      background-image: url('https://i.postimg.cc/HkM6X1k6/IMG-1004.png');
+      /* 도장 이미지 URL */
+      background-size: contain;
+      /* 배경 이미지 크기 조정 */
+      background-repeat: no-repeat;
+      /* 배경 이미지 반복 없음 */
+      opacity: 0;
+      /* 초기에는 투명 상태 */
+      transition: opacity 0.3s ease;
+      /* 부드러운 애니메이션 효과 */
+      z-index: 1;
+      /* 다른 요소들보다 위에 표시 */
+    }
+
+    .bucket.done::after {
+      opacity: 1;
+      /* 클릭 시 도장 이미지 표시 */
+    }
+
+    .img1 {
+      background-image: url('https://i.postimg.cc/SKM35DwZ/IMG-1001.png');
+      color: white;
+    }
+
+    .img2 {
+      background-image: url('https://i.postimg.cc/HxJ4Wkw3/IMG-1002.png');
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="title">✿ 만두의 5일 궁빙고 ✿</h1>
+    <p class="description">여름맞이 궁빙기를 알차게 보내는 법</p>
+    <p class="sub-description">아래 빙고들을 하나씩 클리어하고 태그와 함께 인증해주세요!</p>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+      <div class='bucket img1'>대협이 하셨던 게임 하나 따라해보기</div>
+      <div class='bucket img2'>응당 협객이니 수련을!</div>
+      <div class='bucket img1'>궁빙일기 한번 써보게나~</div>
+      <div class='bucket img2'>최애 비급도 한편 보고!</div>
+      <div class='bucket img1'>❤스스로에게 선물주기❤</div>
+      <div class='bucket img2'>창천 VRC맵 인증샷 창~천</div>
+      <div class='bucket img1'>아세토 연습뱅 골라봐야지</div>
+      <div class='bucket img2'>궁튜브 3개 보고 인증!</div>
+      <div class='bucket img1'>궁궁따 남기기</div>
+    </div>
+  </div>
+  <script>
+    // 페이지 로드 시 이전 상태 복원
+    document.addEventListener("DOMContentLoaded", (event) => {
+      const buckets = document.querySelectorAll(".bucket");
+      buckets.forEach((bucket, index) => {
+        // 로컬 스토리지에서 상태 읽기
+        const isDone = localStorage.getItem("bucket" + index) === "done";
+        if (isDone) {
+          bucket.classList.add("done");
+        }
+      });
+    });
+
+    // 버킷 리스트 클릭 이벤트
+    const buckets = document.querySelectorAll(".bucket");
+    buckets.forEach((bucket, index) => {
+      bucket.addEventListener("click", function () {
+        // 클래스 토글
+        bucket.classList.toggle("done");
+
+        // 로컬 스토리지에 상태 저장
+        if (bucket.classList.contains("done")) {
+          localStorage.setItem("bucket" + index, "done");
+        } else {
+          localStorage.setItem("bucket" + index, "");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
